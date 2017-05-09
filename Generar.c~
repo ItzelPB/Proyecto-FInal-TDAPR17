@@ -52,7 +52,7 @@ FILE	*Archivo;
  char nombreArchivo[20];
  
  strcpy(nombreArchivo,nombre);
- strcat(nombreArchivo, ".txt");
+ strcat(nombreArchivo, ".csv");
  
   
 	Archivo=fopen(nombreArchivo ,"rt");
@@ -81,7 +81,7 @@ void ExtraePreguntas (char *nombre, char *numero){
   
   num= atoi(numero);
   strcpy(nombreArchivo,nombre);
-  strcat(nombreArchivo, ".txt");
+  strcat(nombreArchivo, ".csv");
 #ifdef TRUE
   printf("Nombre archivo: %s", nombreArchivo);
 #endif
@@ -90,8 +90,8 @@ void ExtraePreguntas (char *nombre, char *numero){
   
   while(!feof(fo))
   {
-    fgets(linea, sizeof(linea), fo);
-    sscanf(linea, "%200[^,], %100[^,], %100[^,], %100[^,], %100[^,], %4[^;]\n", reac[i].pregunta, reac[i].opca, reac[i].opcb, reac[i].opcc, reac[i].opcd, reac[i].valor);
+    //fgets(linea, sizeof(linea), fo);
+    fscanf(fo, "%200[^,], %100[^,], %100[^,], %100[^,], %100[^,], %4[^\n]\n", reac[i].pregunta, reac[i].opca, reac[i].opcb, reac[i].opcc, reac[i].opcd, reac[i].valor);
     i++;
     
     #ifdef TRUE
@@ -127,7 +127,7 @@ void ExtraePreguntas (char *nombre, char *numero){
 	{
 	  do{
 	    ocupado=0;
-	   aleatorio= rand()%i+1;
+	   aleatorio= rand()%(i-1)+1;
 	   c=0;
 	    do{
 	      if((numReactivos[c]==aleatorio)||(aleatorio==0)){
@@ -220,7 +220,7 @@ void Guardar (REACTIVO examen, int numReactivos[25], char *nombreArchivo, int nu
      fprintf(fo, " %s,",  examen[j].opcb);
      fprintf(fo, " %s,",  examen[j].opcc);
      fprintf(fo, " %s,",  examen[j].opcd);
-     fprintf(fo, " %s;\n",  examen[j].valor);
+     fprintf(fo, " %s\n",  examen[j].valor);
     
    }
   fclose(fo);
